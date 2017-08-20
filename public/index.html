@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+  <script src="external/pixi.min.js"></script>
+  <script src="external/socket.io.slim.js"></script>
+  <script src="scripts/globals.js"></script>
+  <script src="scripts/utils.js"></script>
+  <script src="scripts/setup.js"></script>
+  <script src="scripts/update.js"></script>
+</head>
+
+<body style="display: flex; justify-content: center">
+
+  <div id="centered"></div>
+
+  <script type="text/javascript">
+    var socket = io();
+
+    var type = "WebGL"
+    if(!PIXI.utils.isWebGLSupported()){
+      type = "canvas"
+    }
+
+    //Aliases
+    var Resources = PIXI.loader.resources,
+        Sprite = PIXI.Sprite;
+    //Create the renderer
+    var renderer = PIXI.autoDetectRenderer(512, 512);
+    var rel = 0.577;
+
+    //Create a container object called the `stage`
+    var stage = new PIXI.Container();
+    //Add the canvas to the HTML document
+    document.getElementById("centered").appendChild(renderer.view);
+
+    socket.on('setup', function(obj) {
+      setup(obj);
+    });
+
+    socket.on('action', function(action) {
+      action_buffer.push(action);
+    });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "kiro",
+  "version": "0.0.1",
+  "description": "Kiro game",
+  "dependencies": {
+    "express": "*",
+    "socket.io": "*",
+    "http": "*",
+    "ejs": "*"
+  }
+}
