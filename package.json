@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "description": "Kiro game",
   "dependencies": {
+    "ejs": "*",
     "express": "*",
-    "socket.io": "*",
+    "heap": "^0.2.6",
     "http": "*",
-    "ejs": "*"
+    "socket.io": "*"
   }
 }

@@ -1,6 +1,8 @@
 var state = require('./state');
 
-module.exports = function(socket) {
+var io;
+
+module.exports.general_in = function(socket) {
     var id = socket.id;
 
     var resp = state.addPlayer(id, 0);
@@ -10,4 +12,8 @@ module.exports = function(socket) {
     });
 
     socket.emit('setup', resp);
+}
+
+module.exports.init_out = function(new_io) {
+    new_io = io;
 }

@@ -18,10 +18,11 @@ app.use(express.static('public'));
 io.on('connection', function(socket){
 
 	game.game_in(socket);
-	general(socket);
+	general.general_in(socket);
 	
 });
 game.init_out(io);
+general.init_out(io);
 
 //Server
 http.listen(3000, function(){
