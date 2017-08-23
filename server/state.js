@@ -1,4 +1,5 @@
 var socket = require('./game');
+var utils = require('./utils');
 
 var players = {};
 var games = {}
@@ -38,7 +39,13 @@ exports.movePlayer = function(id_player, to) {
     var from = player.getPosition();
 
     if(game.map.isValidToMove(to)) {
-        game.movePlayer(id_player, from, to);
-        socket.movePlayer(id_player, from, to);
+        //get the path
+        var sol = utils.getPathFromTo(game.map, from, to, 5, true);
+
+        if(sol.cost > -1) {
+            game.movePlayer(id_player, from, to);
+            socket.movePlayer(id_player, sol.path);
+        }
+
     }
 };

@@ -22,14 +22,33 @@ function handleActions() {
     while(action_buffer.length > 0) {
         var next = action_buffer.shift();
 
+        console.log(next);
+
+        var player_sprite = global_players[next.id_player];
+
         switch(next.action) {
             case "movePlayer":
-                setPlayerPosition(next.id_player, next.to);
+                var animation = new MovementAnimation(player_sprite, next.path);
+                animation_queue.push(animation);
                 break;
             case "":
                 break;
             default:
 
+        }
+    }
+}
+
+function runAnimation() {
+    if(animation_queue.length > 0) {
+        //get the first element
+        var animation = animation_queue[0];
+
+        var finished = animation.getNextTick();
+
+        //if we finish we delete this animation and let the next start
+        if(finished) {
+            animation_queue.shift();
         }
     }
 }
@@ -42,6 +61,8 @@ function update() {
     handleActions();
 
     requestAnimationFrame(update);
+
+    runAnimation();
 
     //set the stage
     renderer.render(stage);

@@ -19,12 +19,11 @@ module.exports.init_out = function(new_io) {
     io = new_io;
 }
 
-module.exports.movePlayer = function(id_player, from, to) {
+module.exports.movePlayer = function(id_player, path) {
     var obj = {
         action : "movePlayer",
         id_player : id_player,
-        from : from,
-        to : to
+        path : path
     };
 
     io.emit('action', obj);

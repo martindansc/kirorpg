@@ -10,4 +10,6 @@ var states = {
     playing : "playing"
 };
 
+var animation_queue = [];
+
 var state;

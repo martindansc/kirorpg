@@ -21,6 +21,13 @@ Map = class Map {
 
         return this.map[position.x][position.y] === 0;
     }
+
+    blocksVisibility(position) {
+        if(this.map[position.x] === undefined) return true;
+        if(this.map[position.x][position.y] === undefined) return true;
+
+        return Math.abs(this.map[position.x][position.y]) === 1;
+    }
     
     generateMap(sid) {
         var map = {};
@@ -45,7 +52,7 @@ Map = class Map {
         var keys_y = Object.keys(this.map[random_x]);
         var random_y = keys_y[utils.getRandomInt(0, keys_y.length - 1)];
 
-        return {x : random_x, y : random_y};
+        return {x : Number(random_x), y : Number(random_y)};
     }
 
     moveUnit(from, to) {
