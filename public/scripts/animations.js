@@ -1,13 +1,12 @@
 
 class MovementAnimation {
 
+    // the constructor should never modify the player_srprite
     constructor(player_sprite, path) {
         this.speed = 3; // tiles/second
 
         this.player_sprite = player_sprite;
         this.path = path;
-
-        this.player_position = { x : Number(player_sprite.x), y : Number(player_sprite.y) };
 
         this.number_of_tiles = path.length - 1;
 
@@ -28,6 +27,11 @@ class MovementAnimation {
     }
 
     getNextTick() {
+        
+        //if it's the firt frame we set the position of the player where it should be
+        if(this.current_frame === 0) {
+            this.player_position = mapToScreen(this.path[0]);
+        }
 
         //if we are at the end we force the position to be the last one
         if(this.number_of_frames <= this.current_frame) {
