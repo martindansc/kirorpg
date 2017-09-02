@@ -18,6 +18,12 @@ function heuristic(from, to) {
 }
 
 function compareCosts(first, second) {
+
+    //if they have the same cost, check smoother path 
+    if(first.cost == second.cost) {
+        return second.number_of_direction_changes - first.number_of_direction_changes;
+    }
+
     return first.cost - second.cost;
 }
 
@@ -26,6 +32,7 @@ function posEquals(pos_a, pos_b) {
 }
 
 function getNextNode(map, to, node, increment_x, increment_y, type) {
+    var previous_pos = node.path[node.path.length - 2];
     var new_pos = copy(node.path[node.path.length - 1]);
     new_pos.x = Number(new_pos.x) + increment_x;
     new_pos.y = Number(new_pos.y) + increment_y;
@@ -38,14 +45,22 @@ function getNextNode(map, to, node, increment_x, increment_y, type) {
     var path = copy(node.path);
     path.push(new_pos);
 
-    return {cost : new_cost, path: path};
+    //check if we have changed the direction
+    var num = node.number_of_direction_changes;
+    if(node.path.length > 1 && Math.abs(previous_pos.x - new_pos.x) != 1) {
+        num++;
+    }
+
+    return {cost : new_cost, path: path, number_of_direction_changes: num, enemy_collision: false};
 }
 
 //Algorithm A* // type -> (true) walking, (false) visibility
 exports.getPathFromTo = function(map, from, to, max, type) {
     var start_point = {
         cost : heuristic(from, to), 
-        path :[from]
+        path :[from],
+        number_of_direction_changes : 0,
+        enemy_collision : false,
     };
 
     var heap = new Heap(compareCosts);
