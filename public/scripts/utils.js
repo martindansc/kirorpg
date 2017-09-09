@@ -3,7 +3,7 @@
 function mapToScreen(tile) {
     var x = Number(tile.x);
     var y = Number(tile.y);
-    return { x: (x - y + 1) * 24, y: (x + y) * 24 * rel };
+    return { x: (x - y + 1) * HalfTile, y: (x + y) * HalfTile * rel };
 }
 
 //Input: x,y pixels of the screen
@@ -11,8 +11,8 @@ function screenToMap(point) {
     var x = Number(point.x);
     var y = Number(point.y);
 
-    return {x: Math.floor(((point.x)/ 24 - 1 + (point.y / (24 *rel)))/2),
-         y: Math.floor(((point.y / (24*rel)) - (point.x - 24) / 24)/2)};
+    return {x: Math.floor(((point.x)/ HalfTile - 1 + (point.y / (HalfTile *rel)))/2),
+         y: Math.floor(((point.y / (HalfTile*rel)) - (point.x - HalfTile) / HalfTile)/2)};
 }
 
 //set player position
@@ -24,7 +24,7 @@ function setPlayerPosition(id_player, position) {
 
 //Check if it the tile is in the map
 function checkIfValidTile(tile) {
-    if(tile.x < 0 || tile.x > 512 || tile.y < 0 || tile.y > 512) 
+    if(tile.x < 0 || tile.x > Map_w || tile.y < 0 || tile.y > Map_h) 
         return false;
 
     return true;
@@ -42,9 +42,9 @@ function drawTile(tile, line_color, background_color) {
     
     draw.drawPolygon([
         0, 0,             
-        24, 24*rel,              
-        0, 48*rel,
-        -24,24*rel,
+        HalfTile, HalfTile*rel,              
+        0, Tile*rel,
+        -HalfTile,HalfTile*rel,
         0, 0   
     ]);
 
